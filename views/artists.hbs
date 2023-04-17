@@ -1,0 +1,15 @@
+{{!-- We create a form that uses a GET request --}}
+{{!-- GET is the default method --}}
+{{!-- http://localhost:3000/artist-search?q=<query> --}}
+  
+  <form action="/artist-search" method="GET">
+    <label for="query">Search for an artist</label>
+    <input type="text" id="query" name="q">
+    <button type="submit">Search</button>
+  </form>
+
+
+<h2>All the artists</h2>
+{{#each artistList}}
+  {{> artistCard this}}
+{{/each}}
