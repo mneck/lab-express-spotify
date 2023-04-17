@@ -35,11 +35,36 @@ app.get("/", function (req, res) {
 app.get("/artist-search", (req, res) => {
   const queryString = req.query.q;
   console.log(queryString);
-  const filteredArtists = artists.filter((artist) => {
-    return artist.name.toLowerCase().includes(queryString.toLowerCase());
-  });
+  let artistInfo;
+  spotifyApi.searchArtists(queryString).then((data) => {
+    artistInfo = data.body.artists.items;
+    artistName = data.body.artists.items[0].name;
+    albumId = data.body.artists.items[0];
+    console.log(albumId.id);
 
-  res.render("artist-search", { home: filteredArtists });
+    res.render("artist-search-results", { artistInfo });
+  });
+});
+
+app.get("/albums/:artistId", (req, res, next) => {
+  const queryString = req.albumQuery.albumQuery;
+  const albumId = req.params.artistId;
+  console.log(albumId);
+  // spotifyApi.getArtistAlbums(albumId).then();
+
+  // get Elvis albums
+
+  // spotifyApi.getArtistAlbums("43ZHCT0cAZBISjO8DG9PnE").then(
+  //   function (data) {
+  //     console.log("Artist albums", data.body);
+  //   },
+  //   function (err) {
+  //     console.error(err);
+  //   }
+  // );
+
+  // const clickedAlbum =
+  // .getArtistAlbums() code goes here
 });
 
 app.listen(3000, () =>
